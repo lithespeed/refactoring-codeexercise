@@ -4,8 +4,8 @@ public class TennisGame1 implements TennisGame {
     
     private int m_score1 = 0;
     private int m_score2 = 0;
-    private String player1Name;
-    private String player2Name;
+    private final String player1Name;
+    private final String player2Name;
 
     public TennisGame1(String player1Name, String player2Name) {
         this.player1Name = player1Name;
@@ -24,22 +24,7 @@ public class TennisGame1 implements TennisGame {
         int tempScore=0;
         if (m_score1==m_score2)
         {
-            switch (m_score1)
-            {
-                case 0:
-                        score = "Love-All";
-                    break;
-                case 1:
-                        score = "Fifteen-All";
-                    break;
-                case 2:
-                        score = "Thirty-All";
-                    break;
-                default:
-                        score = "Deuce";
-                    break;
-                
-            }
+            score = getTiedScore(m_score1);
         }
         else if (m_score1>=4 || m_score2>=4)
         {
@@ -51,26 +36,51 @@ public class TennisGame1 implements TennisGame {
         }
         else
         {
-            for (int i=1; i<3; i++)
-            {
-                if (i==1) tempScore = m_score1;
-                else { score+="-"; tempScore = m_score2;}
-                switch(tempScore)
-                {
-                    case 0:
-                        score+="Love";
-                        break;
-                    case 1:
-                        score+="Fifteen";
-                        break;
-                    case 2:
-                        score+="Thirty";
-                        break;
-                    case 3:
-                        score+="Forty";
-                        break;
-                }
-            }
+            score = getPlayerScore(m_score1) + "-" + getPlayerScore(m_score2);
+        }
+        return score;
+    }
+
+    private String getPlayerScore(int m_score) {
+        String score;
+        switch(m_score)
+        {
+            case 0:
+                score ="Love";
+                break;
+            case 1:
+                score ="Fifteen";
+                break;
+            case 2:
+                score ="Thirty";
+                break;
+            case 3:
+                score ="Forty";
+                break;
+            default:
+                score = "";
+                break;
+        }
+        return score;
+    }
+
+    private String getTiedScore(int m_score) {
+        String score;
+        switch (m_score1)
+        {
+            case 0:
+                score = "Love-All";
+                break;
+            case 1:
+                score = "Fifteen-All";
+                break;
+            case 2:
+                score = "Thirty-All";
+                break;
+            default:
+                score = "Deuce";
+                break;
+
         }
         return score;
     }
